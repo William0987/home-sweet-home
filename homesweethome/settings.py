@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'homesweethome.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'homes',
+        'NAME': "homes"
     }
 }
 
