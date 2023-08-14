@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Furniture Details</h1>
+
+<div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ furniture.furniture_type }}</span>
+        <p>Price: {{ furniture.price }}</p>
+        <p>Color: {{ furniture.color }}</p>
+        <p>Length: {{ furniture.length }}</p>
+        <p>Width: {{ furniture.width }}</p>
+        <p>Height: {{ furniture.height }}</p>
+        <p>Description: {{ furniture.description }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'furnitures_update' furniture.id %}">Edit</a>
+        <a href="{% url 'furnitures_delete' furniture.id %}">Delete</a>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

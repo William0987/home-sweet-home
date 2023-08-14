@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Rent Details</h1>
+
+<div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ rent.address }}</span>
+        <p>Monthly Price: ${{ rent.monthly_price }}</p>
+        <p>Square Footage: {{ rent.square_footage }} sq ft</p>
+        <p>Beds: {{ rent.beds }}</p>
+        <p>Baths: {{ rent.baths }}</p>
+        <p>Type of Home: {{ rent.home_type }}</p>
+        <p>Description: {{ rent.description }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'rents_update' rent.id %}">Edit Details</a>
+        <a href="{% url 'rents_delete' rent.id %}">Delete Rental</a>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

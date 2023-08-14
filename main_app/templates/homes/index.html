@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Available Homes</h1>
+
+{% for home in homes %}
+  <div class="card">
+    <a href = "{% url 'detail' home.id %}">
+        <div class="card-content">
+        <span class="card-title">{{ home.address }}</span>
+        <p>Price: ${{ home.price }}</p>
+        <p>Square Footage: {{ home.square_footage }} sq ft</p>
+        <p>Beds: {{ home.beds }}</p>
+        <p>Baths: {{ home.baths }}</p>
+        <p>Type of Home: {{ home.home_type }}</p>
+        </div>
+    </a>
+  </div>
+{% endfor %}
+
+{% endblock %}
