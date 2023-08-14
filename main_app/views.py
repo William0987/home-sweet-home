@@ -18,8 +18,11 @@ def homes_index(request):
 
 def homes_detail(request, home_id):
     home = Home.objects.get(id=home_id)
+    id_list = home.furnitures.all().values_list('id')
+    furnitures_home_doesnt_have = Furniture.objects.exclude(id__in=id_list)
     return render(request, 'homes/detail.html', {
-        'home': home
+        'home': home,
+        'furnitures': furnitures_home_doesnt_have 
         })
 
 class HomeCreate(CreateView):
@@ -93,4 +96,8 @@ class FurnitureDelete(DeleteView):
 
 def assoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.add(furniture_id)
+  return redirect('detail', home_id=home_id)
+
+def unassoc_furniture(request, home_id, furniture_id):
+  Home.objects.get(id=home_id).furnitures.remove(furniture_id)
   return redirect('detail', home_id=home_id)

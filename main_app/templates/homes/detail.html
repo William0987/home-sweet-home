@@ -26,37 +26,43 @@
     <div class="col s6">
         <h3>Furniture Added</h3>
         {% if home.furnitures.count %}
-        {% for furniture in home.furnitures.all %}
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">
-                    A <span style="color: {{ furniture.color }}">{{ furniture.color }}</span> {{ furniture.furniture_type }}
-                    </span>
+            {% for furniture in home.furnitures.all %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                        A <span style="color: {{ furniture.color }}">{{ furniture.color }}</span> {{ furniture.furniture_type }}
+                        </span>
+                    </div>
+                    <div class="card-action">
+                        <form action="{% url 'unassoc_furniture' home.id furniture.id %}" method="POST">
+                        {% csrf_token %}
+                            <button type="submit" class="btn">Remove Furniture</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         {% else %}
-        <h5>No Furniture Added</h5>
+            <h5>No Furniture Added</h5>
         {% endif %}
     </div>
     <div class="col s6">
         <h3>Available Furniture</h3>
         {% if furnitures.count %}
-        {% for furniture in furnitures.all %}
-            <div class="card">
-            <div class="card-content">
-                <span class="card-title">
-                A <span style="color: {{ furniture.color }}">{{ furniture.color }}</span> {{ furniture.furniture_type }}
-                </span>
-            </div>
-            <div class="card-action">
-                <form action="{% url 'assoc_furniture' home.id furniture.id %}" method="POST">
-                {% csrf_token %}
-                    <button type="submit" class="btn">Add Furniture</button>
-                </form>
-            </div>
-            </div>
-        {% endfor %}
+            {% for furniture in furnitures.all %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                        A <span style="color: {{ furniture.color }}">{{ furniture.color }}</span> {{ furniture.furniture_type }}
+                        </span>
+                    </div>
+                <div class="card-action">
+                    <form action="{% url 'assoc_furniture' home.id furniture.id %}" method="POST">
+                    {% csrf_token %}
+                        <button type="submit" class="btn">Add Furniture</button>
+                    </form>
+                </div>
+                </div>
+            {% endfor %}
         {% else %}
         <h5>{{home.address}} Listing Already Has All Furniture Added</h5>
         {% endif %}

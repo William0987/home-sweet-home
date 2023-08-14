@@ -22,4 +22,5 @@ urlpatterns = [
     path('furnitures/<int:pk>/update/', views.FurnitureUpdate.as_view(), name='furnitures_update'),
     path('furnitures/<int:pk>/delete/', views.FurnitureDelete.as_view(), name='furnitures_delete'),
     path('furnitures/<int:home_id>/assoc_furniture/<int:furniture_id>/', views.assoc_furniture, name='assoc_furniture'),
+    path('furnitures/<int:home_id>/unassoc_furniture/<int:furniture_id>/', views.unassoc_furniture, name='unassoc_furniture'),
 ]
