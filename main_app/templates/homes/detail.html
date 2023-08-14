@@ -69,4 +69,33 @@
     </div>
 </div>
 
+<div class="row">
+    <form action = "{% url 'add_review' home.id %}" method="POST">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <input type="submit" class="btn" value="Add Review">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Rating</th><th>Review</th></tr>
+      </thead>
+      <tbody>
+        {% for review in home.review_set.all %}
+          <tr>
+            <td>{{review.rating}}</td>
+            <td>{{review.description}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<script>
+    const selectEl = document.getElementById('id_rating');
+    M.FormSelect.init(selectEl);
+
+    const descriptionEl = document.getElementById('id_description');
+    M.updateTextFields(descriptionEl);
+</script>
+
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Home, Rent, Furniture
+from .models import Home, Rent, Furniture, Review
+from .forms import ReviewForm
 
 def home(request):
   return render(request, 'home.html')
@@ -20,9 +21,11 @@ def homes_detail(request, home_id):
     home = Home.objects.get(id=home_id)
     id_list = home.furnitures.all().values_list('id')
     furnitures_home_doesnt_have = Furniture.objects.exclude(id__in=id_list)
+    review_form = ReviewForm()
     return render(request, 'homes/detail.html', {
         'home': home,
-        'furnitures': furnitures_home_doesnt_have 
+        'furnitures': furnitures_home_doesnt_have,
+        'review_form': review_form 
         })
 
 class HomeCreate(CreateView):
@@ -100,4 +103,12 @@ def assoc_furniture(request, home_id, furniture_id):
 
 def unassoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.remove(furniture_id)
+  return redirect('detail', home_id=home_id)
+
+def add_review(request, home_id):
+  form = ReviewForm(request.POST)
+  if form.is_valid():
+    new_review = form.save(commit=False)
+    new_review.home_id = home_id
+    new_review.save()
   return redirect('detail', home_id=home_id)

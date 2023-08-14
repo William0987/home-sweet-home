@@ -1,5 +1,12 @@
 from django.db import models
 
+RATINGS = (
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5')
+)
 
 class Furniture(models.Model):
     furniture_type = models.CharField(max_length=100)
@@ -50,3 +57,20 @@ class Rent(models.Model):
   
     def get_absolute_url(self):
         return reverse('detail', kwargs={'rent_id': self.id})
+
+class Review(models.Model):
+    rating = models.IntegerField(
+        choices=RATINGS,
+    )
+    description = models.CharField(
+        max_length=1500,
+        default="Enter your review here..."
+    )
+
+    home = models.ForeignKey(Home, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-rating']
+
+
+
