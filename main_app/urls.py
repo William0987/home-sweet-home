@@ -24,4 +24,5 @@ urlpatterns = [
     path('furnitures/<int:home_id>/assoc_furniture/<int:furniture_id>/', views.assoc_furniture, name='assoc_furniture'),
     path('furnitures/<int:home_id>/unassoc_furniture/<int:furniture_id>/', views.unassoc_furniture, name='unassoc_furniture'),
     path('homes/<int:home_id>/add_review/', views.add_review, name='add_review'),
+    path('homes/<int:home_id>/add_tour/', views.add_tour, name='add_tour'),
 ]

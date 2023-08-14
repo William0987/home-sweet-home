@@ -72,5 +72,12 @@ class Review(models.Model):
     class Meta:
         ordering = ['-rating']
 
+class Tour(models.Model):
+    date = models.DateField('tour date')
+    time = models.TimeField(auto_now=False, auto_now_add=False)
 
+    home = models.ForeignKey(Home, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-date']
 
