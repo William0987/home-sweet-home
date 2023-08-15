@@ -26,4 +26,9 @@ urlpatterns = [
     path('homes/<int:home_id>/add_review/', views.add_review, name='add_review'),
     path('homes/<int:home_id>/add_tour/', views.add_tour, name='add_tour'),
     path('homes/<int:home_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('rents/<int:rent_id>/add_rent_review/', views.add_rent_review, name='add_rent_review'),
+    path('rents/<int:rent_id>/add_rent_tour/', views.add_rent_tour, name='add_rent_tour'),
+    path('rents/<int:rent_id>/add_rent_photo/', views.add_rent_photo, name='add_rent_photo'),
+    path('furnitures/<int:furniture_id>/add_furniture_review/', views.add_furniture_review, name='add_furniture_review'),
+    path('furnitures/<int:furniture_id>/add_furniture_photo/', views.add_furniture_photo, name='add_furniture_photo'),
 ]

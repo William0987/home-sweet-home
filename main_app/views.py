@@ -3,8 +3,8 @@ import uuid
 import boto3
 from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Home, Rent, Furniture, Review, Tour, Photo
-from .forms import ReviewForm, TourForm
+from .models import Home, Rent, Furniture, Review, Tour, Photo, RentReview, RentTour, RentPhoto, FurnitureReview, FurniturePhoto
+from .forms import ReviewForm, TourForm, RentReviewForm, RentTourForm, FurnitureReviewForm
 
 def home(request):
   return render(request, 'home.html')
@@ -30,7 +30,7 @@ def homes_detail(request, home_id):
         'home': home,
         'furnitures': furnitures_home_doesnt_have,
         'review_form': review_form,
-        'tour_form': tour_form
+        'tour_form': tour_form,
         })
 
 class HomeCreate(CreateView):
@@ -57,8 +57,12 @@ def rents_index(request):
 
 def rents_detail(request, rent_id):
     rent = Rent.objects.get(id=rent_id)
+    rent_review_form = RentReviewForm()
+    rent_tour_form = RentTourForm()
     return render(request, 'rents/detail.html', {
-        'rent': rent
+        'rent': rent,
+        'rent_review_form': rent_review_form,
+        'rent_tour_form': rent_tour_form
         })
 
 class RentCreate(CreateView):
@@ -85,7 +89,11 @@ def furnitures_index(request):
 
 def furnitures_detail(request, furniture_id):
   furniture = Furniture.objects.get(id=furniture_id)
-  return render(request, 'furnitures/detail.html', {'furniture': furniture})
+  furniture_review_form = FurnitureReviewForm()
+  return render(request, 'furnitures/detail.html', {
+    'furniture': furniture,
+    'furniture_review_form': furniture_review_form,
+  })
 
 
 class FurnitureCreate(CreateView):
@@ -141,3 +149,58 @@ def add_photo(request, home_id):
             print('An error occurred uploading file to S3')
             print(e)
     return redirect('detail', home_id=home_id)
+  
+def add_rent_review(request, rent_id):
+  form = RentReviewForm(request.POST)
+  if form.is_valid():
+    new_review = form.save(commit=False)
+    new_review.rent_id = rent_id
+    new_review.save()
+  return redirect('rent_detail', rent_id=rent_id)
+
+def add_rent_tour(request, rent_id):
+  form = RentTourForm(request.POST)
+  print(form)
+  if form.is_valid():
+    new_tour = form.save(commit=False)
+    new_tour.rent_id = rent_id
+    new_tour.save()
+  return redirect('rent_detail', rent_id=rent_id)
+
+def add_rent_photo(request, rent_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            RentPhoto.objects.create(url=url, rent_id=rent_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('rent_detail', rent_id=rent_id)
+
+def add_furniture_review(request, furniture_id):
+  form = FurnitureReviewForm(request.POST)
+  if form.is_valid():
+    new_review = form.save(commit=False)
+    new_review.furniture_id = furniture_id
+    new_review.save()
+  return redirect('furniture_detail', furniture_id=furniture_id)
+
+def add_furniture_photo(request, furniture_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            FurniturePhoto.objects.create(url=url, furniture_id=furniture_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('furniture_detail', furniture_id=furniture_id)
