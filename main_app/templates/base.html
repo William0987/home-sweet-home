@@ -22,10 +22,16 @@
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'index' %}">Buy Homes</a></li>
           <li><a href="{% url 'rent_index' %}">Rentals</a></li>
+          <li><a href="{% url 'furniture_index' %}">Buy Furniture</a></li>
+          {% if user.is_authenticated %}
           <li><a href="{% url 'homes_create' %}">Add A Listing</a></li>
           <li><a href="{% url 'rents_create' %}">Add A Rental</a></li>
-          <li><a href="{% url 'furniture_index' %}">Buy Furniture</a></li>
           <li><a href="{% url 'furnitures_create' %}">Sell Furniture</a></li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+          {% else %}
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+          {% endif %}
         </ul>
       </div>
     </nav>
