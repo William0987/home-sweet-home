@@ -74,7 +74,7 @@ class Review(models.Model):
 
 class Tour(models.Model):
     date = models.DateField('tour date')
-    time = models.TimeField(auto_now=False, auto_now_add=False)
+    time = models.CharField()
 
     home = models.ForeignKey(Home, on_delete=models.CASCADE)
 
