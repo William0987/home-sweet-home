@@ -79,11 +79,54 @@ class Tour(models.Model):
     home = models.ForeignKey(Home, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['-date', '-time']
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
     home = models.ForeignKey(Home, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"Photo for home_id: {self.home_id} @{self.url}"
+
+class RentReview(models.Model):
+    rating = models.IntegerField(
+        choices=RATINGS,
+    )
+    description = models.CharField(
+        max_length=1500,
+        default="Enter your review here..."
+    )
+
+    rent = models.ForeignKey(Rent, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-rating']
+
+class RentTour(models.Model):
+    date = models.DateField('tour date')
+    time = models.CharField()
+
+    rent = models.ForeignKey(Rent, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-date', '-time']
+
+class RentPhoto(models.Model):
+    url = models.CharField(max_length=200)
+    rent = models.ForeignKey(Rent, on_delete=models.CASCADE)
+
+class FurnitureReview(models.Model):
+    rating = models.IntegerField(
+        choices=RATINGS,
+    )
+    description = models.CharField(
+        max_length=1500,
+        default="Enter your review here..."
+    )
+
+    furniture = models.ForeignKey(Furniture, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-rating']
+
+class FurniturePhoto(models.Model):
+    url = models.CharField(max_length=200)
+    furniture = models.ForeignKey(Furniture, on_delete=models.CASCADE)

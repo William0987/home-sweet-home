@@ -1,24 +1,99 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Rent Details</h1>
+<h1>Rental Detail</h1>
 
-<div class="col s6">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ rent.address }}</span>
-        <p>Monthly Price: ${{ rent.monthly_price }}</p>
-        <p>Square Footage: {{ rent.square_footage }} sq ft</p>
-        <p>Beds: {{ rent.beds }}</p>
-        <p>Baths: {{ rent.baths }}</p>
-        <p>Type of Home: {{ rent.home_type }}</p>
-        <p>Description: {{ rent.description }}</p>
-      </div>
-      <div class="card-action">
-        <a href="{% url 'rents_update' rent.id %}">Edit Details</a>
-        <a href="{% url 'rents_delete' rent.id %}">Delete Rental</a>
-      </div>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+        <div class="card-content">
+            {% for rentphoto in rent.rentphoto_set.all %}
+            <img class="responsive-img card-panel" src="{{rentphoto.url}}">
+            {% empty %}
+            <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+            {% endfor %}
+            <span class="card-title">{{ rent.address }}</span>
+            <p>Monthly Price: ${{ rent.monthly_price }}</p>
+            <p>Square Footage: {{ rent.square_footage }} sq ft</p>
+            <p>Beds: {{ rent.beds }}</p>
+            <p>Baths: {{ rent.baths }}</p>
+            <p>Type of Home: {{ rent.home_type }}</p>
+            <p>Description: {{ rent.description }}</p>
+        </div>
+        <div class="card-action">
+            <a href="{% url 'rents_update' rent.id %}">Edit Details</a>
+            <a href="{% url 'rents_delete' rent.id %}">Delete Rental</a>
+        </div>
+        </div>
+
+        <form action="{% url 'add_rent_photo' rent.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+            {% csrf_token %}
+            <input type="file" name="photo-file">
+            <br><br>
+            <button type="submit" class="btn">Upload Photo</button>
+        </form>
+
+    </div>
+    <div class="col s6">
+        <form action = "{% url 'add_rent_tour' rent.id %}" method="POST">
+        {% csrf_token %}
+        {{ rent_tour_form.as_p }}
+        <input type="submit" class="btn" value="Request For Tour">
+        </form>
+        <table class="striped">
+          <thead>
+            <tr><th>Date</th><th>Time</th></tr>
+          </thead>
+          <tbody>
+            {% for renttour in rent.renttour_set.all %}
+              <tr>
+                <td>{{renttour.date}}</td>
+                <td>{{renttour.time}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
     </div>
 </div>
+
+<div class="row">
+    <form action = "{% url 'add_rent_review' rent.id %}" method="POST">
+    {% csrf_token %}
+    {{ rent_review_form.as_p }}
+    <input type="submit" class="btn" value="Add Review">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Rating</th><th>Review</th></tr>
+      </thead>
+      <tbody>
+        {% for rentreview in rent.rentreview_set.all %}
+          <tr>
+            <td>{{rentreview.rating}}</td>
+            <td>{{rentreview.description}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<script>
+    const selectEl = document.getElementById('id_rating');
+    M.FormSelect.init(selectEl);
+
+    const descriptionEl = document.getElementById('id_description');
+    M.updateTextFields(descriptionEl);
+
+    const dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
+
+    const timeEl = document.getElementById('id_time')
+    M.Timepicker.init(timeEl);
+</script>
 
 {% endblock %}
