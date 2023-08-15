@@ -1,6 +1,9 @@
+import os
+import uuid
+import boto3
 from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Home, Rent, Furniture, Review, Tour
+from .models import Home, Rent, Furniture, Review, Tour, Photo
 from .forms import ReviewForm, TourForm
 
 def home(request):
@@ -123,3 +126,18 @@ def add_tour(request, home_id):
     new_tour.home_id = home_id
     new_tour.save()
   return redirect('detail', home_id=home_id)
+
+def add_photo(request, home_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=url, home_id=home_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('detail', home_id=home_id)
