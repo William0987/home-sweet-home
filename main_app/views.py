@@ -2,6 +2,10 @@ import os
 import uuid
 import boto3
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Home, Rent, Furniture, Review, Tour, Photo, RentReview, RentTour, RentPhoto, FurnitureReview, FurniturePhoto
 from .forms import ReviewForm, TourForm, RentReviewForm, RentTourForm, FurnitureReviewForm
@@ -33,20 +37,43 @@ def homes_detail(request, home_id):
         'tour_form': tour_form,
         })
 
-class HomeCreate(CreateView):
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user)
+      return redirect('index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
+
+class HomeCreate(LoginRequiredMixin, CreateView):
     model = Home
     fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
     success_url = '/homes'
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
 
-class HomeUpdate(UpdateView):
+class HomeUpdate(LoginRequiredMixin, UpdateView):
     model = Home
     fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
     success_url = '/homes'
-
-class HomeDelete(DeleteView):
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
+    
+class HomeDelete(LoginRequiredMixin, DeleteView):
     model = Home
     success_url = '/homes'
-
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
+    
 def rents_index(request):
     rents = Rent.objects.all()
     return render(request, 'rents/index.html', 
@@ -65,19 +92,28 @@ def rents_detail(request, rent_id):
         'rent_tour_form': rent_tour_form
         })
 
-class RentCreate(CreateView):
+class RentCreate(LoginRequiredMixin, CreateView):
     model = Rent
     fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
     success_url = '/rents'
-
-class RentUpdate(UpdateView):
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
+    
+class RentUpdate(LoginRequiredMixin, UpdateView):
     model = Rent
     fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
     success_url = '/rents'
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
 
-class RentDelete(DeleteView):
+class RentDelete(LoginRequiredMixin, DeleteView):
     model = Rent
     success_url = '/rents'
+    def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
 
 def furnitures_index(request):
   furnitures = Furniture.objects.all()
@@ -95,21 +131,29 @@ def furnitures_detail(request, furniture_id):
     'furniture_review_form': furniture_review_form,
   })
 
-
-class FurnitureCreate(CreateView):
+class FurnitureCreate(LoginRequiredMixin, CreateView):
   model = Furniture
   fields = '__all__'
   success_url = '/furnitures'
-
-class FurnitureUpdate(UpdateView):
+  def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
+  
+class FurnitureUpdate(LoginRequiredMixin, UpdateView):
   model = Furniture
   fields = ['furniture_type', 'price', 'color', 'length', 'width', 'height', 'description']
   success_url = '/furnitures'
+  def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
 
-class FurnitureDelete(DeleteView):
+class FurnitureDelete(LoginRequiredMixin, DeleteView):
   model = Furniture
   success_url = '/furnitures'
-
+  def form_valid(self, form):
+      form.instance.user = self.request.user 
+      return super().form_valid(form)
+  
 def assoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.add(furniture_id)
   return redirect('detail', home_id=home_id)
@@ -118,6 +162,7 @@ def unassoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.remove(furniture_id)
   return redirect('detail', home_id=home_id)
 
+@login_required
 def add_review(request, home_id):
   form = ReviewForm(request.POST)
   if form.is_valid():
@@ -126,6 +171,7 @@ def add_review(request, home_id):
     new_review.save()
   return redirect('detail', home_id=home_id)
 
+@login_required
 def add_tour(request, home_id):
   form = TourForm(request.POST)
   print(form)
@@ -135,6 +181,7 @@ def add_tour(request, home_id):
     new_tour.save()
   return redirect('detail', home_id=home_id)
 
+@login_required
 def add_photo(request, home_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -150,6 +197,7 @@ def add_photo(request, home_id):
             print(e)
     return redirect('detail', home_id=home_id)
   
+@login_required
 def add_rent_review(request, rent_id):
   form = RentReviewForm(request.POST)
   if form.is_valid():
@@ -158,6 +206,7 @@ def add_rent_review(request, rent_id):
     new_review.save()
   return redirect('rent_detail', rent_id=rent_id)
 
+@login_required
 def add_rent_tour(request, rent_id):
   form = RentTourForm(request.POST)
   print(form)
@@ -167,6 +216,7 @@ def add_rent_tour(request, rent_id):
     new_tour.save()
   return redirect('rent_detail', rent_id=rent_id)
 
+@login_required
 def add_rent_photo(request, rent_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -182,6 +232,7 @@ def add_rent_photo(request, rent_id):
             print(e)
     return redirect('rent_detail', rent_id=rent_id)
 
+@login_required
 def add_furniture_review(request, furniture_id):
   form = FurnitureReviewForm(request.POST)
   if form.is_valid():
@@ -190,6 +241,7 @@ def add_furniture_review(request, furniture_id):
     new_review.save()
   return redirect('furniture_detail', furniture_id=furniture_id)
 
+@login_required
 def add_furniture_photo(request, furniture_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
