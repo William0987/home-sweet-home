@@ -1,1 +1,1 @@
-web: gunicorn home-sweet-home.wsgi
+web: gunicorn homesweethome.wsgi
