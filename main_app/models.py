@@ -34,6 +34,7 @@ class Home(models.Model):
     home_type = models.CharField(max_length=200)
     description = models.CharField(max_length=1000, default="Enter Description Here...")
     furnitures = models.ManyToManyField(Furniture)
+    google_maps = models.CharField(max_length=1000, default="Enter Link Here...")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -51,6 +52,7 @@ class Rent(models.Model):
     beds = models.IntegerField(default=0)
     baths = models.IntegerField(default=0)
     home_type = models.CharField(max_length=200)
+    google_maps = models.CharField(max_length=1000, default="Enter Link Here...")
     description = models.CharField(max_length=1000, default="Enter Description Here...")
     
     def __str__(self):
