@@ -2,13 +2,73 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background: url(https://i.imgur.com/bWpmr77.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: absolute;
   }
   
-  main {
-    flex: 1 0 auto;
-  }
+main {
+  flex: 1 0 auto;
+}
   
-  footer.page-footer {
-    padding-top: 0;
-    text-align: right;
-  }
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
+
+#nav-font{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+#nav-title{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+#home-bg{
+  font-family: 'Bebas Neue', sans-serif;
+  color: white;
+  text-align: center;
+  background: url(https://i.imgur.com/FuvRN1I.jpg);
+  width: 100vw;
+  height: 100vh;
+  background-size: contain;
+  overflow: hidden;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+h1{
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+#form{
+  color: white;
+}
+
+#form_fields{
+  color: white;
+}
+
+#about-desc{
+  color: white;
+  font-family: 'Work Sans', sans-serif;
+}
+
+#about-footer{
+  color: white;
+  margin-top: 100px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+#card-content{
+  font-family: 'Work Sans', sans-serif;
+}
+
+#footer{
+  font-family: 'Work Sans', sans-serif;
+}

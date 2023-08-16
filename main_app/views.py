@@ -53,7 +53,7 @@ def signup(request):
 
 class HomeCreate(LoginRequiredMixin, CreateView):
     model = Home
-    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/homes'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -61,7 +61,7 @@ class HomeCreate(LoginRequiredMixin, CreateView):
 
 class HomeUpdate(LoginRequiredMixin, UpdateView):
     model = Home
-    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/homes'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -94,7 +94,7 @@ def rents_detail(request, rent_id):
 
 class RentCreate(LoginRequiredMixin, CreateView):
     model = Rent
-    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/rents'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -102,7 +102,7 @@ class RentCreate(LoginRequiredMixin, CreateView):
     
 class RentUpdate(LoginRequiredMixin, UpdateView):
     model = Rent
-    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/rents'
     def form_valid(self, form):
       form.instance.user = self.request.user 

@@ -4,9 +4,14 @@
 <h1>Available Rentals</h1>
 
 {% for rent in rents %}
-  <div class="card">
+  <div class="card" id="card-content">
+    {% for rentphoto in rent.rentphoto_set.all %}
+              <img class="responsive-img card-panel" src="{{rentphoto.url}}">
+              {% empty %}
+              <div class="card-panel cyan-text center-align">No Photos Uploaded</div>
+          {% endfor %}
     <a href = "{% url 'rent_detail' rent.id %}">
-        <div class="card-content">
+        <div class="card-content black-text">
         <span class="card-title">{{ rent.address }}</span>
         <p>Monthly Price: ${{ rent.monthly_price }}</p>
         <p>Square Footage: {{ rent.square_footage }} sq ft</p>
