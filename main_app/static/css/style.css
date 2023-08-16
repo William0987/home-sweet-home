@@ -11,22 +11,22 @@ body {
     background-position: absolute;
   }
   
-  main {
-    flex: 1 0 auto;
-  }
+main {
+  flex: 1 0 auto;
+}
   
-  footer.page-footer {
-    padding-top: 0;
-    text-align: right;
-  }
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
 
-  #nav-font{
-    font-family: 'Roboto Mono', monospace;
-  }
+#nav-font{
+  font-family: 'Josefin Sans', sans-serif;
+}
 
-  #nav-title{
-    font-family: 'Josefin Sans', sans-serif;
-  }
+#nav-title{
+  font-family: 'Josefin Sans', sans-serif;
+}
 
 #home-bg{
   font-family: 'Bebas Neue', sans-serif;
@@ -47,6 +47,10 @@ h1{
 }
 
 #form{
+  color: white;
+}
+
+#form_fields{
   color: white;
 }
 
