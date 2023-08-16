@@ -30,11 +30,15 @@ def homes_detail(request, home_id):
     furnitures_home_doesnt_have = Furniture.objects.exclude(id__in=id_list)
     review_form = ReviewForm()
     tour_form = TourForm()
+    total_price = home.price
+    for furniture in home.furnitures.all():
+      total_price += furniture.price
     return render(request, 'homes/detail.html', {
         'home': home,
         'furnitures': furnitures_home_doesnt_have,
         'review_form': review_form,
         'tour_form': tour_form,
+        'total_price': total_price,
         })
 
 def signup(request):
