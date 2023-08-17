@@ -1,25 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if object %}
-    <h1>Edit <span class="teal-text">{{object.address}}</span></h1>
-    {% else %}
-    <h1>Add Listing</h1>
+    {% if user.is_authenticated %}
+        {% if object %}
+            {% if user.id == home.user.id %}
+                <h1>Edit <span class="white-text">{{object.address}}</span></h1>
+                <form action="" method="POST" id="form">
+                    {% csrf_token %}
+                    <table>
+                    {{ form.as_table }}
+                    </table>
+                <input type="submit" value="Submit!" class="btn">
+                <h3 id="card-content">To add a suitable Google Maps Link:</h3>
+                <br>
+                <p id="card-content">1. Navigate to Google Maps and find the home location.</p>
+                <br>
+                <p id="card-content">2. Under the overview tab, click on "Share".</p>
+                <br>
+                <p id="card-content">3. Go to embed a map and you will find a HTML line to copy that will follow the given format: (iframe src="LINK" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade).</p>
+                <br>
+                <p id="card-content">4. Copy the "LINK" part of the line without the apostrophes or quotation marks.</p>
+                </form>
+            {% else %}
+                <h1>Access Restricted</h1>
+            {% endif %}
+        {% else %}
+            <h1>Add Listing</h1>
+            <form action="" method="POST" class="white-text">
+                {% csrf_token %}
+                <table>
+                {{ form.as_table }}
+                </table>
+            <input type="submit" value="Submit!" class="btn">
+            <h3 id="card-content">To add a suitable Google Maps Link:</h3>
+            <br>
+            <p id="card-content">1. Navigate to Google Maps and find the home location.</p>
+            <br>
+            <p id="card-content">2. Under the overview tab, click on "Share".</p>
+            <br>
+            <p id="card-content">3. Go to embed a map and you will find a HTML line to copy that will follow the given format: (iframe src="LINK" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade).</p>
+            <br>
+            <p id="card-content">4. Copy the "LINK" part of the line without the apostrophes or quotation marks.</p>
+            </form>
+        {% endif %}
     {% endif %}
-    <form action="" method="POST" id="form">
-        {% csrf_token %}
-        <table>
-        {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit!" class="btn">
-        <h3 id="card-content">To add a suitable Google Maps Link:</h3>
-        <br>
-        <p id="card-content">1. Navigate to Google Maps and find the home location.</p>
-        <br>
-        <p id="card-content">2. Under the overview tab, click on "Share".</p>
-        <br>
-        <p id="card-content">3. Go to embed a map and you will find a HTML line to copy that will follow the given format: (iframe src="LINK" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade).</p>
-        <br>
-        <p id="card-content">4. Copy the "LINK" part of the line without the apostrophes or quotation marks.</p>
-    </form>
+
 {% endblock %}

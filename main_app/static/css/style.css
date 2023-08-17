@@ -34,11 +34,12 @@ footer.page-footer {
   color: white;
   text-align: center;
   background: url(https://i.imgur.com/FuvRN1I.jpg);
-  width: 100vw;
+  max-width: auto;
   height: 100vh;
   background-size: contain;
-  
+  overflow: hidden;
   background-attachment: fixed;
+  background-position: center;
   background-repeat: no-repeat;
   
   
@@ -47,10 +48,6 @@ footer.page-footer {
 h1{
   color: white;
   font-family: 'Source Code Pro', monospace;
-}
-
-#form{
-  color: white;
 }
 
 #form_fields{
@@ -74,4 +71,37 @@ h1{
 
 #footer{
   font-family: 'Work Sans', sans-serif;
+}
+
+label{
+  color: white;
+}
+
+input{
+  border-bottom: 1px solid white !important;
+  color: white;
+}
+
+.caret{
+  fill: white !important;
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+  background-color: darkgray;
+  border-bottom: 1px solid white;
+}
+
+table.striped>tbody>tr:nth-child(even) {
+  background-color: darkgray;
+  border-bottom: 1px solid white;
+}
+
+.helptext{
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+li{
+  color: white;
+  font-family: 'Source Code Pro', monospace;
 }

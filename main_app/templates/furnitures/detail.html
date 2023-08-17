@@ -20,34 +20,42 @@
             <p>Height: {{ furniture.height }}</p>
             <p>Description: {{ furniture.description }}</p>
         </div>
-        <div class="card-action">
-            <a href="{% url 'furnitures_update' furniture.id %}">Edit Details</a>
-            <a href="{% url 'furnitures_delete' furniture.id %}">Delete Furniture</a>
+        {% if user.is_authenticated %}
+            {% if user.id == furniture.user.id %}
+              <div class="card-action">
+                  <a href="{% url 'furnitures_update' furniture.id %}">Edit Details</a>
+                  <a href="{% url 'furnitures_delete' furniture.id %}">Delete Furniture</a>
+              </div>
+            {% endif %}
+        {% endif %}
         </div>
-        </div>
-
-        <form action="{% url 'add_furniture_photo' furniture.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-            {% csrf_token %}
-            <input type="file" name="photo-file">
-            <br><br>
-            <button type="submit" class="btn">Upload Photo</button>
-        </form>
+        
+        {% if user.is_authenticated %}
+            {% if user.id == furniture.user.id %}
+              <form action="{% url 'add_furniture_photo' furniture.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                  {% csrf_token %}
+                  <input type="file" name="photo-file">
+                  <br><br>
+                  <button type="submit" class="btn light-green">Upload Photo</button>
+              </form>
+            {% endif %}
+        {% endif %}
 
     </div>
     <div class="col s6">
       <form action = "{% url 'add_furniture_review' furniture.id %}" method="POST">
         {% csrf_token %}
         {{ furniture_review_form.as_p }}
-        <input type="submit" class="btn" value="Add Review">
+        <input type="submit" class="btn light-green" value="Add Review">
         </form>
         <table class="striped">
           <thead>
-            <tr><th>Rating</th><th>Review</th></tr>
+            <tr class="white-text"><th>Rating</th><th>Review</th></tr>
           </thead>
           <tbody>
             {% for furniturereview in furniture.furniturereview_set.all %}
               <tr>
-                <td>{{furniturereview.rating}}</td>
+                <td>{{furniturereview.rating}}/5</td>
                 <td>{{furniturereview.description}}</td>
               </tr>
             {% endfor %}

@@ -20,29 +20,38 @@
             <p>Type of Home: {{ rent.home_type }}</p>
             <p>Description: {{ rent.description }}</p>
         </div>
-        <div class="card-action">
-            <a href="{% url 'rents_update' rent.id %}">Edit Details</a>
-            <a href="{% url 'rents_delete' rent.id %}">Delete Rental</a>
-        </div>
+        {% if user.is_authenticated %}
+          {% if user.id == rent.user.id %}
+            <div class="card-action">
+                <a href="{% url 'rents_update' rent.id %}">Edit Details</a>
+                <a href="{% url 'rents_delete' rent.id %}">Delete Rental</a>
+            </div>
+          {% endif %}
+        {% endif %}
         </div>
 
-        <form action="{% url 'add_rent_photo' rent.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-            {% csrf_token %}
-            <input type="file" name="photo-file">
-            <br><br>
-            <button type="submit" class="btn">Upload Photo</button>
-        </form>
+        {% if user.is_authenticated %}
+          {% if user.id == rent.user.id %}
+            <form action="{% url 'add_rent_photo' rent.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                {% csrf_token %}
+                <input type="file" name="photo-file">
+                <br><br>
+                <button type="submit" class="btn">Upload Photo</button>
+            </form>
+          {% endif %}
+        {% endif %}
 
     </div>
     <div class="col s6" id="form">
+        <iframe src="{{ rent.google_maps }}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <form action = "{% url 'add_rent_tour' rent.id %}" method="POST">
         {% csrf_token %}
         {{ rent_tour_form.as_p }}
-        <input type="submit" class="btn" value="Request For Tour">
+        <input type="submit" class="btn light-green" value="Request For Tour">
         </form>
         <table class="striped">
           <thead>
-            <tr><th>Date</th><th>Time</th></tr>
+            <tr class="white-text"><th>Date</th><th>Time</th></tr>
           </thead>
           <tbody>
             {% for renttour in rent.renttour_set.all %}
@@ -60,16 +69,16 @@
     <form action = "{% url 'add_rent_review' rent.id %}" method="POST">
     {% csrf_token %}
     {{ rent_review_form.as_p }}
-    <input type="submit" class="btn" value="Add Review">
+    <input type="submit" class="btn light-green" value="Add Review">
     </form>
     <table class="striped">
       <thead>
-        <tr><th>Rating</th><th>Review</th></tr>
+        <tr class="white-text"><th>Rating</th><th>Review</th></tr>
       </thead>
       <tbody>
         {% for rentreview in rent.rentreview_set.all %}
           <tr>
-            <td>{{rentreview.rating}}</td>
+            <td>{{rentreview.rating}}/5</td>
             <td>{{rentreview.description}}</td>
           </tr>
         {% endfor %}

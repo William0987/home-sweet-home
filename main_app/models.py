@@ -17,6 +17,7 @@ class Furniture(models.Model):
     width = models.CharField(max_length=100)
     height = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, default="Enter Description Here...")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.furniture_type} ({self.id})'
@@ -54,6 +55,7 @@ class Rent(models.Model):
     home_type = models.CharField(max_length=200)
     google_maps = models.CharField(max_length=1000, default="Enter Link Here...")
     description = models.CharField(max_length=1000, default="Enter Description Here...")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return f'{self.address} ({self.id})'
