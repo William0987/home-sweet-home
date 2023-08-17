@@ -1,16 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if object %}
-    <h1>Edit <span class="teal-text">{{object.furniture_type}}</span></h1>
-    {% else %}
-    <h1>Sell Furniture</h1>
+    {% if user.is_authenticated %}
+        {% if object %}
+            {% if user.id == furniture.user.id %}
+                <h1>Edit <span class="white-text">{{object.furniture_type}}</span></h1>
+                <form action="" method="POST" id="form">
+                    {% csrf_token %}
+                    <table>
+                    {{ form.as_table }}
+                    </table>
+                <input type="submit" value="Submit!" class="btn">
+                </form>
+            {% else %}
+                <h1>Access Restricted</h1>
+            {% endif %}
+        {% else %}
+            <h1>Add Furniture</h1>
+            <form action="" method="POST" id="form">
+                {% csrf_token %}
+                <table>
+                {{ form.as_table }}
+                </table>
+            <input type="submit" value="Submit!" class="btn">
+            </form>
+        {% endif %}
     {% endif %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        <table>
-        {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit!" class="btn">
-    </form>
+
 {% endblock %}
+

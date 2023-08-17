@@ -30,11 +30,15 @@ def homes_detail(request, home_id):
     furnitures_home_doesnt_have = Furniture.objects.exclude(id__in=id_list)
     review_form = ReviewForm()
     tour_form = TourForm()
+    total_price = home.price
+    for furniture in home.furnitures.all():
+      total_price += furniture.price
     return render(request, 'homes/detail.html', {
         'home': home,
         'furnitures': furnitures_home_doesnt_have,
         'review_form': review_form,
         'tour_form': tour_form,
+        'total_price': total_price,
         })
 
 def signup(request):
@@ -53,7 +57,7 @@ def signup(request):
 
 class HomeCreate(LoginRequiredMixin, CreateView):
     model = Home
-    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/homes'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -61,7 +65,7 @@ class HomeCreate(LoginRequiredMixin, CreateView):
 
 class HomeUpdate(LoginRequiredMixin, UpdateView):
     model = Home
-    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/homes'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -70,9 +74,6 @@ class HomeUpdate(LoginRequiredMixin, UpdateView):
 class HomeDelete(LoginRequiredMixin, DeleteView):
     model = Home
     success_url = '/homes'
-    def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
     
 def rents_index(request):
     rents = Rent.objects.all()
@@ -94,7 +95,7 @@ def rents_detail(request, rent_id):
 
 class RentCreate(LoginRequiredMixin, CreateView):
     model = Rent
-    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/rents'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -102,7 +103,7 @@ class RentCreate(LoginRequiredMixin, CreateView):
     
 class RentUpdate(LoginRequiredMixin, UpdateView):
     model = Rent
-    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description']
+    fields = ['address', 'monthly_price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/rents'
     def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -111,9 +112,6 @@ class RentUpdate(LoginRequiredMixin, UpdateView):
 class RentDelete(LoginRequiredMixin, DeleteView):
     model = Rent
     success_url = '/rents'
-    def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
 
 def furnitures_index(request):
   furnitures = Furniture.objects.all()
@@ -133,7 +131,7 @@ def furnitures_detail(request, furniture_id):
 
 class FurnitureCreate(LoginRequiredMixin, CreateView):
   model = Furniture
-  fields = '__all__'
+  fields = ['furniture_type', 'price', 'color', 'length', 'width', 'height', 'description']
   success_url = '/furnitures'
   def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -150,9 +148,6 @@ class FurnitureUpdate(LoginRequiredMixin, UpdateView):
 class FurnitureDelete(LoginRequiredMixin, DeleteView):
   model = Furniture
   success_url = '/furnitures'
-  def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
   
 def assoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.add(furniture_id)
