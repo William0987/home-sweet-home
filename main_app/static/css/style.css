@@ -72,3 +72,9 @@ h1{
 #footer{
   font-family: 'Work Sans', sans-serif;
 }
+
+#cancel-btn{
+  font-size: 40px;
+  color: white;
+  
+}

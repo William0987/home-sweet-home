@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Remove Furniture</h1>
+  {% if user.is_authenticated %}
+    {% if user.id == furniture.user.id %}
+      <h1>Remove Furniture</h1>
 
-  <h4>Are you sure you want to delete the <span class="teal-text">{{ object.furniture_type }}</span>?</h4>
+      <h4>Are you sure you want to delete the <span class="white-text">{{ object.furniture_type }}</span>?</h4>
 
-  <form action="" method="POST" id="form">
-    {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'furniture_detail' furniture.id %}">Cancel</a>
-  </form>
+      <form action="" method="POST" id="form">
+        {% csrf_token %}
+        <input type="submit" value="Yes - Delete!" class="btn red">
+        <br>
+        <a href="{% url 'furniture_detail' furniture.id %}" class="btn green flow-text white-text">Cancel</a>
+      </form>
+    {% else %}
+      <h1>Access Restricted</h1>
+    {% endif %}
+  {% else %}
+    <h1>Access Restricted</h1>
+  {% endif %}
 {% endblock %}

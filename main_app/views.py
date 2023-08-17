@@ -74,9 +74,6 @@ class HomeUpdate(LoginRequiredMixin, UpdateView):
 class HomeDelete(LoginRequiredMixin, DeleteView):
     model = Home
     success_url = '/homes'
-    def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
     
 def rents_index(request):
     rents = Rent.objects.all()
@@ -115,9 +112,6 @@ class RentUpdate(LoginRequiredMixin, UpdateView):
 class RentDelete(LoginRequiredMixin, DeleteView):
     model = Rent
     success_url = '/rents'
-    def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
 
 def furnitures_index(request):
   furnitures = Furniture.objects.all()
@@ -137,7 +131,7 @@ def furnitures_detail(request, furniture_id):
 
 class FurnitureCreate(LoginRequiredMixin, CreateView):
   model = Furniture
-  fields = '__all__'
+  fields = ['furniture_type', 'price', 'color', 'length', 'width', 'height', 'description']
   success_url = '/furnitures'
   def form_valid(self, form):
       form.instance.user = self.request.user 
@@ -154,9 +148,6 @@ class FurnitureUpdate(LoginRequiredMixin, UpdateView):
 class FurnitureDelete(LoginRequiredMixin, DeleteView):
   model = Furniture
   success_url = '/furnitures'
-  def form_valid(self, form):
-      form.instance.user = self.request.user 
-      return super().form_valid(form)
   
 def assoc_furniture(request, home_id, furniture_id):
   Home.objects.get(id=home_id).furnitures.add(furniture_id)

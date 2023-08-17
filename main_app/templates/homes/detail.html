@@ -20,18 +20,26 @@
             <p>Type of Home: {{ home.home_type }}</p>
             <p>Description: {{ home.description }}</p>
         </div>
-        <div class="card-action">
-            <a href="{% url 'homes_update' home.id %}">Edit Details</a>
-            <a href="{% url 'homes_delete' home.id %}">Delete Listing</a>
-        </div>
+        {% if user.is_authenticated %}
+            {% if user.id == home.user.id %}
+                <div class="card-action">
+                    <a href="{% url 'homes_update' home.id %}">Edit Details</a>
+                    <a href="{% url 'homes_delete' home.id %}">Delete Listing</a>
+                </div>
+            {% endif %}
+        {% endif %}
         </div>
 
-        <form action="{% url 'add_photo' home.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-            {% csrf_token %}
-            <input type="file" name="photo-file">
-            <br><br>
-            <button type="submit" class="btn light-green">Upload Photo</button>
-        </form>
+        {% if user.is_authenticated %}
+            {% if user.id == home.user.id %}
+                <form action="{% url 'add_photo' home.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+                    {% csrf_token %}
+                    <input type="file" name="photo-file">
+                    <br><br>
+                    <button type="submit" class="btn light-green">Upload Photo</button>
+                </form>
+            {% endif %}
+        {% endif %}
 
     </div>
     <div class="col s6">
@@ -124,7 +132,7 @@
       <tbody>
         {% for review in home.review_set.all %}
           <tr>
-            <td>{{review.rating}}</td>
+            <td>{{review.rating}}/5</td>
             <td>{{review.description}}</td>
           </tr>
         {% endfor %}
