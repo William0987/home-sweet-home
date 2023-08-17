@@ -47,11 +47,11 @@
         <form action = "{% url 'add_rent_tour' rent.id %}" method="POST">
         {% csrf_token %}
         {{ rent_tour_form.as_p }}
-        <input type="submit" class="btn" value="Request For Tour">
+        <input type="submit" class="btn light-green" value="Request For Tour">
         </form>
         <table class="striped">
           <thead>
-            <tr><th>Date</th><th>Time</th></tr>
+            <tr class="white-text"><th>Date</th><th>Time</th></tr>
           </thead>
           <tbody>
             {% for renttour in rent.renttour_set.all %}
@@ -69,11 +69,11 @@
     <form action = "{% url 'add_rent_review' rent.id %}" method="POST">
     {% csrf_token %}
     {{ rent_review_form.as_p }}
-    <input type="submit" class="btn" value="Add Review">
+    <input type="submit" class="btn light-green" value="Add Review">
     </form>
     <table class="striped">
       <thead>
-        <tr><th>Rating</th><th>Review</th></tr>
+        <tr class="white-text"><th>Rating</th><th>Review</th></tr>
       </thead>
       <tbody>
         {% for rentreview in rent.rentreview_set.all %}

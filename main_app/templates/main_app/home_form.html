@@ -26,7 +26,7 @@
             {% endif %}
         {% else %}
             <h1>Add Listing</h1>
-            <form action="" method="POST" id="form">
+            <form action="" method="POST" class="white-text">
                 {% csrf_token %}
                 <table>
                 {{ form.as_table }}
