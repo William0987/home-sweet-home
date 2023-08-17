@@ -28,7 +28,8 @@ footer.page-footer {
   font-family: 'Josefin Sans', sans-serif;
 }
 
-#home-bg{
+
+  #home-bg{
   font-family: 'Bebas Neue', sans-serif;
   color: white;
   text-align: center;
@@ -36,9 +37,11 @@ footer.page-footer {
   width: 100vw;
   height: 100vh;
   background-size: contain;
-  overflow: hidden;
+  
   background-attachment: fixed;
   background-repeat: no-repeat;
+  
+  
 }
 
 h1{
