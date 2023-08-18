@@ -24,6 +24,7 @@ def homes_index(request):
         }
     )
 
+@login_required
 def homes_detail(request, home_id):
     home = Home.objects.get(id=home_id)
     id_list = home.furnitures.all().values_list('id')
@@ -60,7 +61,7 @@ class HomeCreate(LoginRequiredMixin, CreateView):
     fields = ['address', 'price', 'square_footage', 'beds', 'baths', 'home_type', 'description', 'google_maps']
     success_url = '/homes'
     def form_valid(self, form):
-      form.instance.user = self.request.user 
+      form.instance.user = self.request.user
       return super().form_valid(form)
 
 class HomeUpdate(LoginRequiredMixin, UpdateView):
@@ -83,6 +84,7 @@ def rents_index(request):
         }
     )
 
+@login_required
 def rents_detail(request, rent_id):
     rent = Rent.objects.get(id=rent_id)
     rent_review_form = RentReviewForm()
@@ -121,6 +123,7 @@ def furnitures_index(request):
     }
 )
 
+@login_required
 def furnitures_detail(request, furniture_id):
   furniture = Furniture.objects.get(id=furniture_id)
   furniture_review_form = FurnitureReviewForm()

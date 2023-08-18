@@ -5,9 +5,9 @@
         {% if object %}
             {% if user.id == furniture.user.id %}
                 <h1>Edit <span class="white-text">{{object.furniture_type}}</span></h1>
-                <form action="" method="POST" id="form">
+                <form action="" method="POST" id="form" class="white-text">
                     {% csrf_token %}
-                    <table>
+                    <table class="white-text">
                     {{ form.as_table }}
                     </table>
                 <input type="submit" value="Submit!" class="btn">
@@ -17,9 +17,9 @@
             {% endif %}
         {% else %}
             <h1>Add Furniture</h1>
-            <form action="" method="POST" id="form">
+            <form action="" method="POST" id="form" class="white-text">
                 {% csrf_token %}
-                <table>
+                <table class="white-text">
                 {{ form.as_table }}
                 </table>
             <input type="submit" value="Submit!" class="btn">
