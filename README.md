@@ -1,50 +1,39 @@
-App Title: Home-Sweet-Home
+ #App Title: Home-Sweet-Home
 
--------------------------------------------------
+Welcome to the Home-Sweet-Home App, where users can buy, sell and rent from a click of a button. Home-Sweet-Home is an all in one app that willl allow users to purchase their dream home and furnish it from the comfort of their home. Users will be able to contact realtors for a viewing and get in touch for all their needs in the app. Sellers will be able to upload images of their home for the public to see. All in all, the Home-Sweet-Home app is designed for users that want to be able to buy, rent, and sell without having go out of their comfort zone.
 
-Background Information:
- 
-User can Buy, Rent and Sell homes 
-Save your favourite listings and furnitures.
+##Getting Started:
+[Click to view Project Planning!]​"https://trello.com/b/S1Rhlkxw/project-3-sei"
 
-For each listing user can save to favourites adn add your favourite furnitures.
+[Click to view the Home-Sweet-Home App!]"https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/"
 
-User can view total price of home + furnitures.  
+##Screenshots:
 
-User can view reviews for homes and star ratings for furnitures.
-
--------------------------------------------------
-
-Getting Started:
-
-Trello Board: https://trello.com/invite/b/S1Rhlkxw/ATTI9a899b9ffa8cbbf6b6d59f7b1c96f84aF3F0ABFF/project-3-sei
-
-Heroku Deployment: 
-https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/
-
-
-------------------------------------------------
-
-Screenshots:git 
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/homes"/>
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/rents"/>
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/furnitures">
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/homes/create/">
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/about/">
+<img src="https://radiant-wildwood-47842-7d58f5eadc3b.herokuapp.com/">
 
 
 
+##Technologies Used:
+ -HTML
+ -CSS
+ -Python
+ -Django
+ -Heroku
+ -Postgresql
+ -Javascript
+ -Materialize framework
+ -SQL
+ -Neon
 
---------------------------------
-Technologies Used:
- HTML
- CSS
- Python
- Django
- Heroku
- Postgresql
- Javascript
- Materialize framework
-
--------------------------------------------------
-
-Next Steps:
-- Google Maps API integration
+##Next Steps:
 - Realtor Zoom chat 
 - Virtual Tour option
 - Finance Calculator integration
+- Favorite Listings Page
+- My Listings Page
+- Search Bar Functionality
