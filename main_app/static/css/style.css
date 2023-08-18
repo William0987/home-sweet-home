@@ -28,21 +28,17 @@ footer.page-footer {
   font-family: 'Josefin Sans', sans-serif;
 }
 
-
-  #home-bg{
+#home-bg{
   font-family: 'Bebas Neue', sans-serif;
   color: white;
   text-align: center;
   background: url(https://i.imgur.com/FuvRN1I.jpg);
   max-width: auto;
   height: 100vh;
-  background-size: contain;
-  overflow: hidden;
+  background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  
-  
 }
 
 h1{
