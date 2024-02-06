@@ -6,7 +6,7 @@ Welcome to the Home-Sweet-Home App, where users can buy, sell and rent from a cl
 
 [Click to view Project Planning!​](https://trello.com/b/S1Rhlkxw/project-3-sei)
 
-[Click to view the Home-Sweet-Home App!](https://home-sweet-home-app-737780089a17.herokuapp.com/)
+[Click to view the Home-Sweet-Home App!](https://home-sweet-home-app-229638ba47e5.herokuapp.com/homes/)
 
 # Screenshots:
 
