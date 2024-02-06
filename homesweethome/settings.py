@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'homesweethome.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'home-sweet-home',
+    'NAME': 'neondb',
     'USER': os.environ['DB_USER'],
     'PASSWORD': os.environ['DB_PW'],
     'HOST': os.environ['DB_HOST'],

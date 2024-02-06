@@ -20,25 +20,25 @@ footer.page-footer {
   text-align: right;
 }
 
-#nav-font{
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-#nav-title{
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-#home-bg{
+#home-bg {
   font-family: 'Bebas Neue', sans-serif;
   color: white;
   text-align: center;
-  background: url(https://i.imgur.com/FuvRN1I.jpg);
+  background: url(home-background.jpg);
   max-width: auto;
   height: 100vh;
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#nav-font{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+#nav-title{
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 h1{
